@@ -34,7 +34,10 @@ Theory
 
 Courses / Examples
 * [.NET Micro ORMs](http://www.pluralsight.com/courses/dotnet-micro-orms-introduction) :o:
-* []()
 
+Problems / Attention
+* [You may receive incorrect values when using SCOPE_IDENTITY() and @@IDENTITY](http://support.microsoft.com/kb/2019779) :bangbang:
 
+Other
+* [EMOJI CHEAT SHEET](http://www.emoji-cheat-sheet.com/)
 
