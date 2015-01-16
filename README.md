@@ -23,6 +23,7 @@ Micro ORM
 * [PetaPoco](http://www.toptensoftware.com/petapoco/) :question:
 * [Insight.Database](https://github.com/jonwagner/Insight.Database) :question:
 * [MicroLite ORM](http://microliteorm.wordpress.com/) :question:
+* [Symbiotic](http://www.nuget.org/packages/Symbiotic_x64/) :question:
 * [Top 20 NuGet packages for micro-orm](http://nugetmusthaves.com/Tag/micro-orm)
 
 Theory
