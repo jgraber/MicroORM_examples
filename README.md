@@ -39,6 +39,11 @@ Courses / Examples
 Problems / Attention
 * [You may receive incorrect values when using SCOPE_IDENTITY() and @@IDENTITY](http://support.microsoft.com/kb/2019779) :bangbang:
 
+Full text search
+* [Querying SQL Server Using Full-Text Search](https://technet.microsoft.com/en-us/library/ms142559%28v=sql.105%29.aspx)
+* [Query with Full-Text Search](https://msdn.microsoft.com/en-us/library/ms142583.aspx)
+* [StackOverflow: Full text search in sql server](http://stackoverflow.com/questions/19857204/full-text-search-in-sql-server)
+
 Other
 * [EMOJI CHEAT SHEET](http://www.emoji-cheat-sheet.com/)
 
