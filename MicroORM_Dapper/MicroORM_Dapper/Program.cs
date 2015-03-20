@@ -14,6 +14,7 @@ namespace MicroORM_Dapper
         static void Main(string[] args)
         {
             ReadData();
+            WriteData();
         }
 
         private static void ReadData()
@@ -26,6 +27,23 @@ namespace MicroORM_Dapper
                     Console.WriteLine(currentBook);
                 }
             }
+        }
+
+        private static void WriteData()
+        {
+            Book book = new Book() {Title = "A New Book", Summary = "Not much", Pages = 100, Rating = 3 };
+
+            using (var connection = Program.GetOpenConnection())
+            {
+                string sql = @"INSERT INTO Book (Title, Pages, ISBN, Summary, Rating) 
+                                VALUES (@Title, @Pages, @ISBN, @Summary, @Rating);
+                                SELECT CAST(SCOPE_IDENTITY() AS INT)";
+
+                int id = connection.Query<int>(sql, book).Single();
+                book.Id = id;
+            }
+
+            Console.WriteLine(book);
         }
 
         private static SqlConnection GetOpenConnection()
