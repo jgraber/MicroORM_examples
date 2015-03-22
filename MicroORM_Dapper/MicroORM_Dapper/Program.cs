@@ -17,6 +17,7 @@ namespace MicroORM_Dapper
             WriteData();
             UpdateData();
             DeleteData();
+            AggregateFunctions();
         }
 
         private static void ReadData()
@@ -75,6 +76,15 @@ namespace MicroORM_Dapper
             }
         }
 
+        private static void AggregateFunctions()
+        {
+            using (var connection = Program.GetOpenConnection())
+            {
+                var book = connection.Query<BookStats>("SELECT count(*) as 'BookCount', sum(Pages) as 'TotalPages', avg(Rating) as 'AverageRating' FROM Book;").Single();
+              
+                Console.WriteLine(book);
+            }
+        }
 
         private static SqlConnection GetOpenConnection()
         {
