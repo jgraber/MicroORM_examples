@@ -47,3 +47,12 @@ mathematics, and in more than two dozen essays drawn from his popular “Good Ma
 blog, you’ll find concepts, proofs, and examples that are often surprising, 
 counterintuitive, or just plain weird.', 3);
 
+Go
+
+CREATE VIEW BookStats AS
+SELECT	count(*) as 'BookCount', 
+		sum(Pages) as 'TotalPages', 
+		avg(Rating) as 'AverageRating' 
+FROM Book;
+
+Go
