@@ -15,6 +15,7 @@ namespace MicroORM_Dapper
         {
             ReadData();
             WriteData();
+            UpdateData();
         }
 
         private static void ReadData()
@@ -44,6 +45,21 @@ namespace MicroORM_Dapper
             }
 
             Console.WriteLine(book);
+        }
+
+        private static void UpdateData()
+        {
+            using (var connection = Program.GetOpenConnection())
+            {
+                var book = connection.Query<Book>("SELECT TOP 1 * FROM Book ORDER BY Id desc").Single();
+                book.Title = "An Updated Title";
+
+                string sql = @"UPDATE Book SET Title = @Title, Pages = @Pages, 
+                                ISBN = @ISBN, Summary = @Summary, Rating = @Rating WHERE Id = @Id;";
+                connection.Execute(sql, book);
+
+                Console.WriteLine(book);
+            }
         }
 
         private static SqlConnection GetOpenConnection()
