@@ -16,6 +16,7 @@ namespace MicroORM_Dapper
             ReadData();
             WriteData();
             UpdateData();
+            DeleteData();
         }
 
         private static void ReadData()
@@ -61,6 +62,19 @@ namespace MicroORM_Dapper
                 Console.WriteLine(book);
             }
         }
+
+        private static void DeleteData()
+        {
+            using (var connection = Program.GetOpenConnection())
+            {
+                var book = connection.Query<Book>("SELECT TOP 1 * FROM Book ORDER BY Id desc").Single();
+
+                string sql = @"DELETE FROM Book WHERE Id = @Id;";
+                connection.Execute(sql, book);
+                Console.WriteLine("Book with Id {0} is removed.", book.Id);
+            }
+        }
+
 
         private static SqlConnection GetOpenConnection()
         {
