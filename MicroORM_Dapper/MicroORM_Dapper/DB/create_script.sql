@@ -56,3 +56,20 @@ SELECT	count(*) as 'BookCount',
 FROM Book;
 
 Go
+
+CREATE TABLE Publisher
+(
+	Id		INT IDENTITY(1,1),
+	Name	VARCHAR(255),
+	Url		VARCHAR(255),
+	EMail	VARCHAR(255),
+	CONSTRAINT pk_Publisher_Id PRIMARY KEY (Id),
+);
+
+Go
+
+ALTER TABLE Book
+ADD PublisherId INT NULL,
+CONSTRAINT fk_Book_Publisher FOREIGN KEY (PublisherId) REFERENCES Publisher;
+
+Go

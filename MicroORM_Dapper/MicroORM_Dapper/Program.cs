@@ -21,6 +21,8 @@ namespace MicroORM_Dapper
             AggregateFunctions();
 
             ReadFromView();
+
+            OneToNRelation();
         }
 
         private static void ReadData()
@@ -97,6 +99,51 @@ namespace MicroORM_Dapper
 
                 Console.WriteLine(bookstats);
             }
+        }
+
+        private static void OneToNRelation()
+        {
+            using (var connection = Program.GetOpenConnection())
+            {
+                // Create and save a publisher
+                var publisher = new Publisher()
+                {
+                    Name = "The Pragmatic Programmers, LLC",
+                    EMail = "support@pragmaticprogrammer.com",
+                    Url = "https://pragprog.com/"
+                };
+                StorePublisher(publisher, connection);
+                Console.WriteLine(publisher);
+
+                // Create and save a book with a publisher
+                var book = new Book()
+                {
+                    Title = "Pragmatic Thinking & Learning", 
+                    Publisher = publisher
+                };
+
+                var saveRelation = @"INSERT INTO Book (Title, Pages, ISBN, Summary, Rating, PublisherId) 
+                                VALUES (@Title, @Pages, @ISBN, @Summary, @Rating, @PublisherId);
+                                SELECT CAST(SCOPE_IDENTITY() AS INT)";
+                int id = connection.Query<int>(saveRelation, book).Single();
+                book.Id = id;
+
+                // List all books of the publisher
+                var books = connection.Query<Book>("SELECT * FROM Book WHERE PublisherId = @Id", publisher).ToList();
+                foreach (var currentBook in books)
+                {
+                    Console.WriteLine(currentBook);
+                }
+            }
+        }
+
+        private static void StorePublisher(Publisher publisher, SqlConnection connection)
+        {
+            var insert = @"INSERT INTO Publisher (Name, Url, EMail)
+                                          VALUES (@Name, @Url, @EMail)
+                            SELECT CAST(SCOPE_IDENTITY() AS INT)";
+            int id = connection.Query<int>(insert, publisher).Single();
+            publisher.Id = id;
         }
 
         private static SqlConnection GetOpenConnection()
