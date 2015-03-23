@@ -46,6 +46,8 @@
     <Compile Include="Book.cs" />
     <Compile Include="BookStats.cs" />
     <Compile Include="Dapper\SqlMapper.cs" />
+    <Compile Include="Data\DapperBookRepository.cs" />
+    <Compile Include="Data\IBookRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publisher.cs" />

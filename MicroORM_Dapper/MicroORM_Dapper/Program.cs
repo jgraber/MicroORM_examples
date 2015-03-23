@@ -3,13 +3,17 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Configuration;
 using Dapper;
+using MicroORM_Dapper.Data;
 
 namespace MicroORM_Dapper
 {
     class Program
     {
+        private static IBookRepository _repository;
         static void Main(string[] args)
         {
+            _repository = new DapperBookRepository();
+
             ReadData();
             WriteData();
             UpdateData();
@@ -24,13 +28,10 @@ namespace MicroORM_Dapper
 
         private static void ReadData()
         {
-            using (var connection = Program.GetOpenConnection())
+            var books = _repository.GetAll();
+            foreach (var currentBook in books)
             {
-                var books = connection.Query<Book>("SELECT * FROM Book").ToList();
-                foreach (var currentBook in books)
-                {
-                    Console.WriteLine(currentBook);
-                }
+                Console.WriteLine(currentBook);
             }
         }
 
@@ -38,44 +39,28 @@ namespace MicroORM_Dapper
         {
             Book book = new Book() {Title = "A New Book", Summary = "Not much", Pages = 100, Rating = 3 };
 
-            using (var connection = Program.GetOpenConnection())
-            {
-                string sql = @"INSERT INTO Book (Title, Pages, ISBN, Summary, Rating) 
-                                VALUES (@Title, @Pages, @ISBN, @Summary, @Rating);
-                                SELECT CAST(SCOPE_IDENTITY() AS INT)";
-
-                int id = connection.Query<int>(sql, book).Single();
-                book.Id = id;
-            }
-
-            Console.WriteLine(book);
+            Book persisted = _repository.Add(book);
+            
+            Console.WriteLine(persisted);
         }
 
         private static void UpdateData()
         {
-            using (var connection = Program.GetOpenConnection())
-            {
-                var book = connection.Query<Book>("SELECT TOP 1 * FROM Book ORDER BY Id desc").Single();
-                book.Title = "An Updated Title";
+            var book = _repository.GetAll().Last();
+            book.Title = "An Updated Title";
 
-                string sql = @"UPDATE Book SET Title = @Title, Pages = @Pages, 
-                                ISBN = @ISBN, Summary = @Summary, Rating = @Rating WHERE Id = @Id;";
-                connection.Execute(sql, book);
+            var result = _repository.Update(book);
 
-                Console.WriteLine(book);
-            }
+            Console.WriteLine(book);
         }
 
         private static void DeleteData()
         {
-            using (var connection = Program.GetOpenConnection())
-            {
-                var book = connection.Query<Book>("SELECT TOP 1 * FROM Book ORDER BY Id desc").Single();
+            var newestBook = _repository.GetAll().Last();
+            _repository.Remove(newestBook.Id);
 
-                string sql = @"DELETE FROM Book WHERE Id = @Id;";
-                connection.Execute(sql, book);
-                Console.WriteLine("Book with Id {0} is removed.", book.Id);
-            }
+            var result = _repository.Find(newestBook.Id);
+            Console.WriteLine("Book with id {0} still exists? {1}", newestBook.Id, result != null);
         }
 
         private static void AggregateFunctions()
