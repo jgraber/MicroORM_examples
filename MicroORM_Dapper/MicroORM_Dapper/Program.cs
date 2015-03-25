@@ -104,11 +104,7 @@ namespace MicroORM_Dapper
                     Publisher = publisher
                 };
 
-                var saveRelation = @"INSERT INTO Book (Title, Pages, ISBN, Summary, Rating, PublisherId) 
-                                VALUES (@Title, @Pages, @ISBN, @Summary, @Rating, @PublisherId);
-                                SELECT CAST(SCOPE_IDENTITY() AS INT)";
-                int id = connection.Query<int>(saveRelation, book).Single();
-                book.Id = id;
+                _repository.Add(book);
 
                 // List all books of the publisher
                 var books = connection.Query<Book>("SELECT * FROM Book WHERE PublisherId = @Id", publisher).ToList();
