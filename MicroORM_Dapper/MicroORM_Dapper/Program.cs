@@ -46,7 +46,7 @@ namespace MicroORM_Dapper
 
         private static void UpdateData()
         {
-            var book = _repository.GetAll().Last();
+            var book = _repository.GetLatest();
             book.Title = "An Updated Title";
 
             var result = _repository.Update(book);
@@ -56,7 +56,7 @@ namespace MicroORM_Dapper
 
         private static void DeleteData()
         {
-            var newestBook = _repository.GetAll().Last();
+            var newestBook = _repository.GetLatest();
             _repository.Remove(newestBook.Id);
 
             var result = _repository.Find(newestBook.Id);

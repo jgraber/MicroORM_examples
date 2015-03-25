@@ -48,5 +48,10 @@ namespace MicroORM_Dapper.Data
             string sql = @"DELETE FROM Book WHERE Id = @Id;";
             this.db.Execute(sql, new {Id = id});
         }
+
+        public Book GetLatest()
+        {
+            return this.db.Query<Book>("SELECT TOP 1 * FROM Book ORDER By Id desc;").SingleOrDefault();
+        }
     }
 }
