@@ -73,3 +73,13 @@ ADD PublisherId INT NULL,
 CONSTRAINT fk_Book_Publisher FOREIGN KEY (PublisherId) REFERENCES Publisher;
 
 Go
+
+CREATE TABLE Cover
+(
+	BookId	INT,
+	Cover	VARBINARY(MAX),
+	CONSTRAINT pk_Cover_BookId PRIMARY KEY (BookId),
+	CONSTRAINT fk_Cover_Book FOREIGN KEY (BookId) REFERENCES Book
+);
+
+Go

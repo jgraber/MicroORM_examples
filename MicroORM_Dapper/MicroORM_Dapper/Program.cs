@@ -2,6 +2,8 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Configuration;
+using System.Drawing;
+using System.IO;
 using Dapper;
 using MicroORM_Dapper.Data;
 
@@ -24,6 +26,8 @@ namespace MicroORM_Dapper
             ReadFromView();
 
             OneToNRelation();
+
+            OneToOneRelation();
         }
 
         private static void ReadData()
@@ -114,6 +118,29 @@ namespace MicroORM_Dapper
                 }
             }
         }
+
+        private static void OneToOneRelation()
+        {
+            var cover = Image.FromFile(".\\Images\\cover_prag_think_learn.jpg");
+            var book = new Book() {Title = "One with a Cover"};
+            book.Cover = cover;
+            _repository.Add(book);
+
+            using (var connection = Program.GetOpenConnection())
+            {
+                var result = connection.Query<int>("SELECT 1 FROM Cover WHERE BookId = @Id", book).SingleOrDefault();
+              
+                Console.WriteLine("Was the cover found? {0}", result);
+
+                var bookWithCover = _repository.Find(book.Id);
+                FileStream fs = new FileStream(bookWithCover.Id+".png",FileMode.Create);
+                bookWithCover.Cover.Save(fs, System.Drawing.Imaging.ImageFormat.Png);
+                fs.Close();
+            }
+
+
+        }
+
 
         private static void StorePublisher(Publisher publisher, SqlConnection connection)
         {

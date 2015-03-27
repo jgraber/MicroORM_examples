@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Drawing;
+using System.IO;
 
 namespace MicroORM_Dapper
 {
@@ -12,11 +14,24 @@ namespace MicroORM_Dapper
         public string Summary { get; set; }
         public decimal Rating { get; set; }
         public Publisher Publisher { get; set; }
+        public Image Cover { get; set; }
 
         public int? PublisherId
         {
             get { return Publisher != null ? (int?) Publisher.Id : null; }
         }
+
+        public byte[] CoverAsBytes()
+        {
+            MemoryStream ms = new MemoryStream();
+            if (Cover != null)
+            {
+                Cover.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            }
+           
+            return ms.ToArray();
+        }
+
 
         public override string ToString()
         {

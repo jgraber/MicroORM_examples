@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 
 
@@ -16,7 +18,18 @@ namespace MicroORM_Dapper.Data
 
         public Book Find(int id)
         {
-            return this.db.Query<Book>("SELECT * FROM Book WHERE Id = @Id;", new {Id = id}).SingleOrDefault();
+            var book = this.db.Query<Book>("SELECT * FROM Book WHERE Id = @Id;", new {Id = id}).SingleOrDefault();
+
+            if (book != null)
+            {
+                var cover = this.db.Query<byte[]>("SELECT Cover FROM Cover WHERE BookId = @Id;", new {Id = id}).SingleOrDefault();
+                if (cover != null)
+                {
+                    book.Cover = Image.FromStream(new MemoryStream(cover));
+                }
+            }
+           
+            return book;
         }
 
         public List<Book> GetAll()
@@ -32,8 +45,17 @@ namespace MicroORM_Dapper.Data
 
             int id =  this.db.Query<int>(sql, book).Single();
             book.Id = id;
+
+            if (book.Cover != null)
+            {
+                string insertCover = @"INSERT INTO Cover (BookId, Cover) Values (@Id, @Cover);";
+                this.db.Execute(insertCover, new {Id = book.Id, Cover = book.CoverAsBytes()});
+            }
+            
             return book;
         }
+
+
 
         public Book Update(Book book)
         {
