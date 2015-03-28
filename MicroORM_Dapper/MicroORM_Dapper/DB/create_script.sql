@@ -83,3 +83,27 @@ CREATE TABLE Cover
 );
 
 Go
+
+CREATE TABLE Author
+(
+	Id			INT IDENTITY(1,1),
+	FirstName	VARCHAR(255),
+	LastName	VARCHAR(255),
+	EMail		VARCHAR(255),
+	Web 		VARCHAR(255),
+	Twitter		VARCHAR(50),
+	CONSTRAINT pk_Author_Id PRIMARY KEY (Id),
+);
+
+Go
+
+CREATE TABLE BookAuthor
+(
+	BookId 		INT,
+	AuthorId 	INT,
+	CONSTRAINT pk_BookAuthor PRIMARY KEY (BookId, AuthorId),
+	CONSTRAINT fk_BookAuthor_Book FOREIGN KEY (BookId) REFERENCES Book,
+	CONSTRAINT fk_BookAuthor_Author FOREIGN KEY (AuthorId) REFERENCES Author
+);
+
+Go

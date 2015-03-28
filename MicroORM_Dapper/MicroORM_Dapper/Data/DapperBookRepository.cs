@@ -51,6 +51,17 @@ namespace MicroORM_Dapper.Data
                 string insertCover = @"INSERT INTO Cover (BookId, Cover) Values (@Id, @Cover);";
                 this.db.Execute(insertCover, new {Id = book.Id, Cover = book.CoverAsBytes()});
             }
+
+            if (book.Authors.Count > 0)
+            {
+                string insertBookAuthor = @"INSERT INTO [dbo].[BookAuthor] ([BookId],[AuthorId])
+                                             VALUES (@BookId, @AuthorId);";
+
+                foreach (var author in book.Authors)
+                {
+                    this.db.Execute(insertBookAuthor, new { BookId = book.Id, AuthorId = author.Id });
+                }
+            }
             
             return book;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 using System.IO;
@@ -15,6 +16,12 @@ namespace MicroORM_Dapper
         public decimal Rating { get; set; }
         public Publisher Publisher { get; set; }
         public Image Cover { get; set; }
+        public List<Author> Authors { get; set; }
+
+        public Book()
+        {
+            Authors = new List<Author>();
+        }
 
         public int? PublisherId
         {

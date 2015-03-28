@@ -28,6 +28,8 @@ namespace MicroORM_Dapper
             OneToNRelation();
 
             OneToOneRelation();
+
+            NToMRelation();
         }
 
         private static void ReadData()
@@ -141,6 +143,27 @@ namespace MicroORM_Dapper
 
         }
 
+        private static void NToMRelation()
+        {
+            using (var connection = Program.GetOpenConnection())
+            {
+                var author = new Author() {LastName = "Hunt", FirstName = "Andy"};
+                StoreAuthor(author, connection);
+
+                var book = new Book() {Title = "One with an Author"};
+                book.Authors.Add(author);
+
+                _repository.Add(book);
+
+
+                var authorId =
+                    connection.Query<int>("SELECT authorId FROM BookAuthor WHERE BookId = @Id", book).SingleOrDefault();
+
+                Console.WriteLine("Author of the book 'One with an Author': {0}", authorId);
+            }
+
+
+        }
 
         private static void StorePublisher(Publisher publisher, SqlConnection connection)
         {
@@ -149,6 +172,15 @@ namespace MicroORM_Dapper
                             SELECT CAST(SCOPE_IDENTITY() AS INT)";
             int id = connection.Query<int>(insert, publisher).Single();
             publisher.Id = id;
+        }
+
+        private static void StoreAuthor(Author author, SqlConnection connection)
+        {
+            var insertAuthor = @"INSERT INTO Author ([FirstName],[LastName],[EMail],[Web],[Twitter])
+                           VALUES (@FirstName, @LastName, @EMail, @Web, @Twitter)
+                           SELECT CAST(SCOPE_IDENTITY() AS INT)";
+            int id = connection.Query<int>(insertAuthor, author).Single();
+            author.Id = id;
         }
 
         private static SqlConnection GetOpenConnection()
