@@ -34,7 +34,7 @@ namespace MicroORM_Dapper
 
         private static void ReadData()
         {
-            var books = _repository.GetAll();
+            var books = _repository.GetAllBooks();
             foreach (var currentBook in books)
             {
                 Console.WriteLine(currentBook);
@@ -52,7 +52,7 @@ namespace MicroORM_Dapper
 
         private static void UpdateData()
         {
-            var book = _repository.GetLatest();
+            var book = _repository.GetLatestBook();
             book.Title = "An Updated Title";
 
             var result = _repository.Update(book);
@@ -62,10 +62,10 @@ namespace MicroORM_Dapper
 
         private static void DeleteData()
         {
-            var newestBook = _repository.GetLatest();
-            _repository.Remove(newestBook.Id);
+            var newestBook = _repository.GetLatestBook();
+            _repository.RemoveBook(newestBook.Id);
 
-            var result = _repository.Find(newestBook.Id);
+            var result = _repository.FindBook(newestBook.Id);
             Console.WriteLine("Book with id {0} still exists? {1}", newestBook.Id, result != null);
         }
 
@@ -134,7 +134,7 @@ namespace MicroORM_Dapper
               
                 Console.WriteLine("Was the cover found? {0}", result);
 
-                var bookWithCover = _repository.Find(book.Id);
+                var bookWithCover = _repository.FindBook(book.Id);
                 FileStream fs = new FileStream(bookWithCover.Id+".png",FileMode.Create);
                 bookWithCover.Cover.Save(fs, System.Drawing.Imaging.ImageFormat.Png);
                 fs.Close();

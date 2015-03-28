@@ -16,7 +16,7 @@ namespace MicroORM_Dapper.Data
                  ConfigurationManager.ConnectionStrings["OrmConnection"].ConnectionString);
 
 
-        public Book Find(int id)
+        public Book FindBook(int id)
         {
             var book = this.db.Query<Book>("SELECT * FROM Book WHERE Id = @Id;", new {Id = id}).SingleOrDefault();
 
@@ -32,7 +32,7 @@ namespace MicroORM_Dapper.Data
             return book;
         }
 
-        public List<Book> GetAll()
+        public List<Book> GetAllBooks()
         {
             return this.db.Query<Book>("SELECT * FROM Book;").ToList(); 
         }
@@ -76,13 +76,13 @@ namespace MicroORM_Dapper.Data
             return book;
         }
 
-        public void Remove(int id)
+        public void RemoveBook(int id)
         {
             string sql = @"DELETE FROM Book WHERE Id = @Id;";
             this.db.Execute(sql, new {Id = id});
         }
 
-        public Book GetLatest()
+        public Book GetLatestBook()
         {
             return this.db.Query<Book>("SELECT TOP 1 * FROM Book ORDER By Id desc;").SingleOrDefault();
         }

@@ -4,12 +4,12 @@ namespace MicroORM_Dapper.Data
 {
     public interface IBookRepository
     {
-        Book Find(int id);
-        List<Book> GetAll();
+        Book FindBook(int id);
+        List<Book> GetAllBooks();
         Book Add(Book book);
         Book Update(Book book);
-        void Remove(int id);
+        void RemoveBook(int id);
 
-        Book GetLatest();
+        Book GetLatestBook();
     }
 }
