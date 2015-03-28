@@ -13,5 +13,8 @@ namespace MicroORM_Dapper.Data
 
         Author Add(Author author);
         Author FindAuthor(int id);
+
+        Publisher Add(Publisher publisher);
+        Publisher FindPublisher(int id);
     }
 }

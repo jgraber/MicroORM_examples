@@ -103,5 +103,22 @@ namespace MicroORM_Dapper.Data
             var author = this.db.Query<Author>("SELECT * FROM Author WHERE Id = @Id;", new { Id = id }).SingleOrDefault();
             return author;
         }
+
+        public Publisher Add(Publisher publisher)
+        {
+            var insertPublisher = @"INSERT INTO Publisher (Name, Url, EMail)
+                                          VALUES (@Name, @Url, @EMail)
+                            SELECT CAST(SCOPE_IDENTITY() AS INT)";
+            int id = this.db.Query<int>(insertPublisher, publisher).Single();
+            publisher.Id = id;
+
+            return publisher;
+        }
+
+        public Publisher FindPublisher(int id)
+        {
+            var publisher = this.db.Query<Publisher>("SELECT * FROM Publisher WHERE Id = @Id;", new { Id = id }).SingleOrDefault();
+            return publisher;
+        }
     }
 }

@@ -100,7 +100,7 @@ namespace MicroORM_Dapper
                     EMail = "support@pragmaticprogrammer.com",
                     Url = "https://pragprog.com/"
                 };
-                StorePublisher(publisher, connection);
+                _repository.Add(publisher);
                 Console.WriteLine(publisher);
 
                 // Create and save a book with a publisher
@@ -163,15 +163,6 @@ namespace MicroORM_Dapper
             }
 
 
-        }
-
-        private static void StorePublisher(Publisher publisher, SqlConnection connection)
-        {
-            var insert = @"INSERT INTO Publisher (Name, Url, EMail)
-                                          VALUES (@Name, @Url, @EMail)
-                            SELECT CAST(SCOPE_IDENTITY() AS INT)";
-            int id = connection.Query<int>(insert, publisher).Single();
-            publisher.Id = id;
         }
 
         private static SqlConnection GetOpenConnection()
