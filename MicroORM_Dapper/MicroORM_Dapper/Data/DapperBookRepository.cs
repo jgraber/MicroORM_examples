@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace MicroORM_Dapper.Data
 {
-    public class DapperBookRepository : IBookRepository
+    public class DapperBookRepository : IRepository
     {
         private IDbConnection db = new SqlConnection(
                  ConfigurationManager.ConnectionStrings["OrmConnection"].ConnectionString);

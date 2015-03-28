@@ -2,7 +2,7 @@
 
 namespace MicroORM_Dapper.Data
 {
-    public interface IBookRepository
+    public interface IRepository
     {
         Book FindBook(int id);
         List<Book> GetAllBooks();
