@@ -86,5 +86,22 @@ namespace MicroORM_Dapper.Data
         {
             return this.db.Query<Book>("SELECT TOP 1 * FROM Book ORDER By Id desc;").SingleOrDefault();
         }
+
+        public Author Add(Author author)
+        {
+            var insertAuthor = @"INSERT INTO Author ([FirstName],[LastName],[EMail],[Web],[Twitter])
+                           VALUES (@FirstName, @LastName, @EMail, @Web, @Twitter)
+                           SELECT CAST(SCOPE_IDENTITY() AS INT)";
+            int id = this.db.Query<int>(insertAuthor, author).Single();
+            author.Id = id;
+
+            return author;
+        }
+
+        public Author FindAuthor(int id)
+        {
+            var author = this.db.Query<Author>("SELECT * FROM Author WHERE Id = @Id;", new { Id = id }).SingleOrDefault();
+            return author;
+        }
     }
 }

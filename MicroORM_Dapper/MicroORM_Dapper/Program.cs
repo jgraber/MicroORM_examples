@@ -148,7 +148,7 @@ namespace MicroORM_Dapper
             using (var connection = Program.GetOpenConnection())
             {
                 var author = new Author() {LastName = "Hunt", FirstName = "Andy"};
-                StoreAuthor(author, connection);
+                _repository.Add(author);
 
                 var book = new Book() {Title = "One with an Author"};
                 book.Authors.Add(author);
@@ -158,8 +158,8 @@ namespace MicroORM_Dapper
 
                 var authorId =
                     connection.Query<int>("SELECT authorId FROM BookAuthor WHERE BookId = @Id", book).SingleOrDefault();
-
-                Console.WriteLine("Author of the book 'One with an Author': {0}", authorId);
+                var bookAuthor = _repository.FindAuthor(authorId);
+                Console.WriteLine("Author of the book 'One with an Author': {0}", bookAuthor);
             }
 
 
@@ -172,15 +172,6 @@ namespace MicroORM_Dapper
                             SELECT CAST(SCOPE_IDENTITY() AS INT)";
             int id = connection.Query<int>(insert, publisher).Single();
             publisher.Id = id;
-        }
-
-        private static void StoreAuthor(Author author, SqlConnection connection)
-        {
-            var insertAuthor = @"INSERT INTO Author ([FirstName],[LastName],[EMail],[Web],[Twitter])
-                           VALUES (@FirstName, @LastName, @EMail, @Web, @Twitter)
-                           SELECT CAST(SCOPE_IDENTITY() AS INT)";
-            int id = connection.Query<int>(insertAuthor, author).Single();
-            author.Id = id;
         }
 
         private static SqlConnection GetOpenConnection()

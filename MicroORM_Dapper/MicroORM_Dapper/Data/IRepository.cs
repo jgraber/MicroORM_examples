@@ -9,7 +9,9 @@ namespace MicroORM_Dapper.Data
         Book Add(Book book);
         Book Update(Book book);
         void RemoveBook(int id);
-
         Book GetLatestBook();
+
+        Author Add(Author author);
+        Author FindAuthor(int id);
     }
 }
