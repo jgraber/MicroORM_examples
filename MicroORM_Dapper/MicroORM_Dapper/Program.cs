@@ -30,6 +30,8 @@ namespace MicroORM_Dapper
             OneToOneRelation();
 
             NToMRelation();
+
+            FullTextSearch();
         }
 
         private static void ReadData()
@@ -164,6 +166,24 @@ namespace MicroORM_Dapper
 
 
         }
+
+        private static void FullTextSearch()
+        {
+            using (var connection = Program.GetOpenConnection())
+            {
+                var books =
+                    connection.Query<Book>(
+                        "SELECT * FROM [Book] WHERE CONTAINS((Summary, Title),'\"Ruby on Rails\" or math or Rails')")
+                        .ToList();
+
+                Console.WriteLine("Results from the fulltext search:");
+                foreach (var book in books)
+                {
+                    Console.WriteLine(book);
+                }
+            }
+        }
+
 
         private static SqlConnection GetOpenConnection()
         {
