@@ -107,3 +107,9 @@ CREATE TABLE BookAuthor
 );
 
 Go
+
+
+// Full Text
+CREATE FULLTEXT CATALOG [Fulltext_Book]WITH ACCENT_SENSITIVITY = OFF
+
+GO
