@@ -21,8 +21,6 @@ namespace MicroORM_Dapper
             UpdateData();
             DeleteData();
 
-            AggregateFunctions();
-
             ReadFromView();
 
             OneToNRelation();
@@ -73,56 +71,41 @@ namespace MicroORM_Dapper
             Console.WriteLine("Book with id {0} still exists? {1}", newestBook.Id, result != null);
         }
 
-        private static void AggregateFunctions()
-        {
-            using (var connection = Program.GetOpenConnection())
-            {
-                var book = connection.Query<BookStats>("SELECT count(*) as 'BookCount', sum(Pages) as 'TotalPages', avg(Rating) as 'AverageRating' FROM Book;").Single();
-              
-                Console.WriteLine(book);
-            }
-        }
-
         private static void ReadFromView()
         {
-            using (var connection = Program.GetOpenConnection())
-            {
-                var bookstats = connection.Query<BookStats>("SELECT * FROM BookStats").Single();
-
-                Console.WriteLine(bookstats);
-            }
+            var bookstats = _repository.GetStatistics();
+            Console.WriteLine(bookstats);
         }
 
         private static void OneToNRelation()
         {
-            using (var connection = Program.GetOpenConnection())
+
+            // Create and save a publisher
+            var publisher = new Publisher()
             {
-                // Create and save a publisher
-                var publisher = new Publisher()
-                {
-                    Name = "The Pragmatic Programmers, LLC",
-                    EMail = "support@pragmaticprogrammer.com",
-                    Url = "https://pragprog.com/"
-                };
-                _repository.Add(publisher);
-                Console.WriteLine(publisher);
+                Name = "The Pragmatic Programmers, LLC",
+                EMail = "support@pragmaticprogrammer.com",
+                Url = "https://pragprog.com/"
+            };
+            _repository.Add(publisher);
+            Console.WriteLine(publisher);
 
-                // Create and save a book with a publisher
-                var book = new Book()
-                {
-                    Title = "Pragmatic Thinking & Learning", 
-                    Publisher = publisher
-                };
+            // Create and save a book with a publisher
+            var book = new Book()
+            {
+                Title = "Pragmatic Thinking & Learning",
+                Publisher = publisher
+            };
 
-                _repository.Add(book);
+            _repository.Add(book);
 
-                // List all books of the publisher
-                var books = connection.Query<Book>("SELECT * FROM Book WHERE PublisherId = @Id", publisher).ToList();
-                foreach (var currentBook in books)
-                {
-                    Console.WriteLine(currentBook);
-                }
+            // List all books of the publisher
+            var books = _repository.GetBooksByPublisher(publisher);
+            foreach (var currentBook in books)
+            {
+                Console.WriteLine(currentBook);
             }
+
         }
 
         private static void OneToOneRelation()

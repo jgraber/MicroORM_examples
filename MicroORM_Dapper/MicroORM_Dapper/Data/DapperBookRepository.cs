@@ -87,6 +87,11 @@ namespace MicroORM_Dapper.Data
             return this.db.Query<Book>("SELECT TOP 1 * FROM Book ORDER By Id desc;").SingleOrDefault();
         }
 
+        public List<Book> GetBooksByPublisher(Publisher publisher)
+        {
+            return this.db.Query<Book>("SELECT * FROM Book WHERE PublisherId = @Id", publisher).ToList(); 
+        }
+
         public Author Add(Author author)
         {
             var insertAuthor = @"INSERT INTO Author ([FirstName],[LastName],[EMail],[Web],[Twitter])
@@ -119,6 +124,11 @@ namespace MicroORM_Dapper.Data
         {
             var publisher = this.db.Query<Publisher>("SELECT * FROM Publisher WHERE Id = @Id;", new { Id = id }).SingleOrDefault();
             return publisher;
+        }
+
+        public BookStats GetStatistics()
+        {
+            return this.db.Query<BookStats>("SELECT * FROM BookStats").Single();
         }
     }
 }
