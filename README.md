@@ -17,7 +17,7 @@ Be able to use a Micro ORM for the applications planned to build in 2015. For th
 Links
 ===
 Micro ORM
-* [Dapper](https://github.com/StackExchange/dapper-dot-net) :o:
+* [Dapper](https://github.com/StackExchange/dapper-dot-net) :heavy_check_mark:
 * [Massive](https://github.com/robconery/massive) :o:
 * [FluentData](http://fluentdata.codeplex.com/) :o:
 * [PetaPoco](http://www.toptensoftware.com/petapoco/) :question:
