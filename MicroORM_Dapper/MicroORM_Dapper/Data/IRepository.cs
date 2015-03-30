@@ -19,5 +19,7 @@ namespace MicroORM_Dapper.Data
         Publisher FindPublisher(int id);
 
         BookStats GetStatistics();
+
+        List<Book> SearchFullText(string terms);
     }
 }

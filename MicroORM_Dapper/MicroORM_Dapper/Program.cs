@@ -154,19 +154,14 @@ namespace MicroORM_Dapper
 
         private static void FullTextSearch()
         {
-            using (var connection = Program.GetOpenConnection())
-            {
-                var books =
-                    connection.Query<Book>(
-                        "SELECT * FROM [Book] WHERE CONTAINS((Summary, Title),'\"Ruby on Rails\" or math or Rails')")
-                        .ToList();
+            var books = _repository.SearchFullText("\"Ruby on Rails\" or math or Rails");
 
-                Console.WriteLine("Results from the fulltext search:");
-                foreach (var book in books)
-                {
-                    Console.WriteLine(book);
-                }
+            Console.WriteLine("Results from the fulltext search:");
+            foreach (var book in books)
+            {
+                Console.WriteLine(book);
             }
+
         }
 
         private static void SemanticSearch()

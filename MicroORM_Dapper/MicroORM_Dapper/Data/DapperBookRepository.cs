@@ -130,5 +130,12 @@ namespace MicroORM_Dapper.Data
         {
             return this.db.Query<BookStats>("SELECT * FROM BookStats").Single();
         }
+
+        public List<Book> SearchFullText(string terms)
+        {
+            return this.db.Query<Book>(
+                        "SELECT * FROM [Book] WHERE CONTAINS((Summary, Title),@Terms)", new {Terms = terms})
+                        .ToList();
+        }
     }
 }
