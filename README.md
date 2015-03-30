@@ -43,6 +43,9 @@ Full text search
 * [Querying SQL Server Using Full-Text Search](https://technet.microsoft.com/en-us/library/ms142559%28v=sql.105%29.aspx)
 * [Query with Full-Text Search](https://msdn.microsoft.com/en-us/library/ms142583.aspx)
 * [StackOverflow: Full text search in sql server](http://stackoverflow.com/questions/19857204/full-text-search-in-sql-server)
+* [Semantic Search (SQL Server)](https://msdn.microsoft.com/en-us/library/gg492075.aspx)
+* [Find Similar or Related Documents with SEMANTICSIMILARITYTABLE](https://msdn.microsoft.com/en-us/library/gg492062.aspx)
+
 
 Other
 * [EMOJI CHEAT SHEET](http://www.emoji-cheat-sheet.com/)
