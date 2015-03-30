@@ -21,5 +21,7 @@ namespace MicroORM_Dapper.Data
         BookStats GetStatistics();
 
         List<Book> SearchFullText(string terms);
+
+        List<SemanticBook> SemanticSearch(string terms);
     }
 }

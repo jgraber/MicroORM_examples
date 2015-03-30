@@ -137,5 +137,21 @@ namespace MicroORM_Dapper.Data
                         "SELECT * FROM [Book] WHERE CONTAINS((Summary, Title),@Terms)", new {Terms = terms})
                         .ToList();
         }
+
+        public List<SemanticBook> SemanticSearch(string terms)
+        {
+            return this.db.Query<SemanticBook>(
+                        @"SELECT TOP (25) score, b.*
+                            FROM Book as b
+                                INNER JOIN SEMANTICKEYPHRASETABLE
+                                (
+                                Book,
+                                (title, summary)
+                                ) AS KEYP_TBL
+                            ON b.Id = KEYP_TBL.document_key
+                            WHERE KEYP_TBL.keyphrase = @SearchFor
+                            ORDER BY KEYP_TBL.Score DESC;", new { SearchFor = terms })
+                        .ToList();
+        }
     }
 }

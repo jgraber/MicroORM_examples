@@ -166,30 +166,14 @@ namespace MicroORM_Dapper
 
         private static void SemanticSearch()
         {
-            using (var connection = Program.GetOpenConnection())
+            //Get Top 25 results where "Software" is in title or summary, order by score
+            var books = _repository.SemanticSearch("Software");
+
+            Console.WriteLine("Results from the semantic search:");
+            foreach (var book in books)
             {
-                //Get Top 25 results where "Software" is in title or summary, order by score
-                var books =
-                    connection.Query<SemanticBook>(
-                        @"SELECT TOP (25) score, b.*
-                            FROM Book as b
-                                INNER JOIN SEMANTICKEYPHRASETABLE
-                                (
-                                Book,
-                                (title, summary)
-                                ) AS KEYP_TBL
-                            ON b.Id = KEYP_TBL.document_key
-                            WHERE KEYP_TBL.keyphrase = @SearchFor
-                            ORDER BY KEYP_TBL.Score DESC;", new {SearchFor = "Software"})
-                        .ToList();
-
-                Console.WriteLine("Results from the semantic search:");
-                foreach (var book in books)
-                {
-                    Console.WriteLine(book);
-                }
+                Console.WriteLine(book);
             }
-
         }
 
 
