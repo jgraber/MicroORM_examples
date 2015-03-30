@@ -14,7 +14,7 @@ namespace MicroORM_Dapper
         private static IRepository _repository;
         static void Main(string[] args)
         {
-            _repository = new DapperBookRepository();
+            _repository = new DapperRepository();
 
             ReadData();
             WriteData();
