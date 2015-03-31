@@ -54,7 +54,7 @@ namespace MicroORM_Massive
             Console.WriteLine("The old book: {0}", FormatBook(book));
             book.Title = "A new Title for an existing book";
 
-            bookTable.Update(book);
+            bookTable.Update(book, book.Id);
 
             var newBook = bookTable.First(Id:book.Id);
             Console.WriteLine("The updated book: {0}", FormatBook(newBook));
