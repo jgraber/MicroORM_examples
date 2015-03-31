@@ -11,6 +11,11 @@ namespace MicroORM_Massive
     {
         static void Main(string[] args)
         {
+            ReadData();
+        }
+
+        private static void ReadData()
+        {
             dynamic books = new Book().All();
             foreach (var book in books)
             {
