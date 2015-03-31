@@ -12,6 +12,7 @@ namespace MicroORM_Massive
         static void Main(string[] args)
         {
             ReadData();
+            WriteData();
         }
 
         private static void ReadData()
@@ -19,9 +20,33 @@ namespace MicroORM_Massive
             dynamic books = new Book().All();
             foreach (var book in books)
             {
-                Console.WriteLine(String.Format("[{0}] {1} - {2}, {3}",
-                    book.Id, new string(((string) book.Title).Take(30).ToArray()), book.ISBN, book.Pages));
+                Console.WriteLine(FormatBook(book));
             }
+        }
+
+        private static void WriteData()
+        {
+            dynamic bookTable = new Book();
+            var book =
+                new
+                {
+                    Title = "A Book about Massive",
+                    ISBN = "1234",
+                    Summary = "A basic example on how to make an INSERT statement with Massive micro ORM",
+                    Pages = 234,
+                    Rating = 3.5
+                };
+            var newID = bookTable.Insert(book);
+            Console.WriteLine("New Id: " + newID.ID);
+            var newBook = bookTable.First(Id:newID.ID);
+
+            Console.WriteLine("The new book is: {0}", FormatBook(newBook));
+        }
+
+        private static dynamic FormatBook(dynamic book)
+        {
+            return String.Format("[{0}] {1} - {2}, {3}",
+                book.Id, new string(((string)book.Title).Take(30).ToArray()), book.ISBN, book.Pages);
         }
     }
 

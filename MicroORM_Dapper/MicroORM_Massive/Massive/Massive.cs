@@ -648,7 +648,7 @@ namespace MicroORM_Massive.Massive
                     var cmd = CreateInsertCommand(ex);
                     cmd.Connection = conn;
                     cmd.ExecuteNonQuery();
-                    cmd.CommandText = "SELECT SCOPE_IDENTITY() as newID";
+                    cmd.CommandText = "SELECT @@IDENTITY as newID"; //"SELECT CAST(SCOPE_IDENTITY() AS INT) as newID";
                     ex.ID = cmd.ExecuteScalar();
                     Inserted(ex);
                 }
