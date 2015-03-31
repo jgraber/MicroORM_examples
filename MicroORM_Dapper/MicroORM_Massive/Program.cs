@@ -17,6 +17,8 @@ namespace MicroORM_Massive
             DeleteData();
 
             ReadFromView();
+
+            FullTextSearch();
         }
 
         private static void ReadData()
@@ -80,7 +82,19 @@ namespace MicroORM_Massive
             dynamic stats = tbl.Query("SELECT * FROM BookStats").First();
             Console.WriteLine(String.Format("#Books: {0}, total pages: {1}, average rating: {2}", stats.BookCount, stats.TotalPages, stats.AverageRating));
         }
-        
+
+        private static void FullTextSearch()
+        {
+            dynamic bookTable = new Book();
+            dynamic result = bookTable.All(where: "WHERE CONTAINS((Summary, Title), @0)", args: "\"Ruby on Rails\" or math or Rails");
+
+            Console.WriteLine("Results from the fulltext search:");
+            foreach (var book in result)
+            {
+                Console.WriteLine(FormatBook(book));
+            }
+
+        }
        
 
         private static dynamic FormatBook(dynamic book)
