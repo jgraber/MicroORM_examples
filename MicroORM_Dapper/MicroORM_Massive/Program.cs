@@ -19,6 +19,8 @@ namespace MicroORM_Massive
             ReadFromView();
 
             FullTextSearch();
+
+            SemanticSearch();
         }
 
         private static void ReadData()
@@ -94,6 +96,28 @@ namespace MicroORM_Massive
                 Console.WriteLine(FormatBook(book));
             }
 
+        }
+
+        private static void SemanticSearch()
+        {
+            //Get Top 25 results where "Software" is in title or summary, order by score
+            dynamic bookTable = new Book();
+            dynamic result = bookTable.Query(@"SELECT TOP (25) score, b.*
+                            FROM Book as b
+                                INNER JOIN SEMANTICKEYPHRASETABLE
+                                (
+                                Book,
+                                (title, summary)
+                                ) AS KEYP_TBL
+                            ON b.Id = KEYP_TBL.document_key
+                            WHERE KEYP_TBL.keyphrase = @0
+                            ORDER BY KEYP_TBL.Score DESC;", args: "Software");
+
+            Console.WriteLine("Results from the semantic search:");
+            foreach (var book in result)
+            {
+                Console.WriteLine("Score: {0} for {1}", book.score, FormatBook(book));
+            }
         }
        
 
