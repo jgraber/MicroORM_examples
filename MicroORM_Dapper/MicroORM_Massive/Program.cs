@@ -14,6 +14,7 @@ namespace MicroORM_Massive
             ReadData();
             WriteData();
             UpdateData();
+            DeleteData();
         }
 
         private static void ReadData()
@@ -55,6 +56,20 @@ namespace MicroORM_Massive
 
             var newBook = bookTable.First(Id:book.Id);
             Console.WriteLine("The updated book: {0}", FormatBook(newBook));
+        }
+
+        private static void DeleteData()
+        {
+            dynamic bookTable = new Book();
+            var book = bookTable.First(OrderBy: "Id DESC");
+            Console.WriteLine("The old book: {0}", FormatBook(book));
+            
+
+            bookTable.Delete(book);
+
+            var newBook = bookTable.First(Id: book.Id);
+
+            Console.WriteLine("The book could not be found? {0}", newBook == null);
         }
 
         private static dynamic FormatBook(dynamic book)
