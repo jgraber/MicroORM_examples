@@ -15,6 +15,8 @@ namespace MicroORM_Massive
             WriteData();
             UpdateData();
             DeleteData();
+
+            ReadFromView();
         }
 
         private static void ReadData()
@@ -72,11 +74,21 @@ namespace MicroORM_Massive
             Console.WriteLine("The book could not be found? {0}", newBook == null);
         }
 
+        private static void ReadFromView()
+        {
+            var tbl = new DynamicModel("OrmConnection", tableName: "BookStats");
+            dynamic stats = tbl.Query("SELECT * FROM BookStats").First();
+            Console.WriteLine(String.Format("#Books: {0}, total pages: {1}, average rating: {2}", stats.BookCount, stats.TotalPages, stats.AverageRating));
+        }
+        
+       
+
         private static dynamic FormatBook(dynamic book)
         {
             return String.Format("[{0}] {1} - {2}, {3}",
                 book.Id, new string(((string)book.Title).Take(30).ToArray()), book.ISBN, book.Pages);
         }
+
     }
 
     public class Book : DynamicModel
