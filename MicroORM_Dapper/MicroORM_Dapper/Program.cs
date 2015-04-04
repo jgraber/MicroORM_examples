@@ -140,6 +140,7 @@ namespace MicroORM_Dapper
                 var book = new Book() {Title = "One with an Author"};
                 book.Authors.Add(author);
 
+                Console.WriteLine("New Author Id: {0}", author.Id);
                 _repository.Add(book);
 
 

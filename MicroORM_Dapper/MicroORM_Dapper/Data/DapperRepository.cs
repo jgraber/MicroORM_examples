@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Transactions;
 
 
 namespace MicroORM_Dapper.Data
@@ -39,30 +40,35 @@ namespace MicroORM_Dapper.Data
 
         public Book Add(Book book)
         {
-            string sql = @"INSERT INTO Book (Title, Pages, ISBN, Summary, Rating, PublisherId) 
+            using (var transaction = new TransactionScope())
+            {
+
+
+                string sql = @"INSERT INTO Book (Title, Pages, ISBN, Summary, Rating, PublisherId) 
                                 VALUES (@Title, @Pages, @ISBN, @Summary, @Rating, @PublisherId);
                                 SELECT CAST(SCOPE_IDENTITY() AS INT)";
 
-            int id =  this.db.Query<int>(sql, book).Single();
-            book.Id = id;
+                int id = this.db.Query<int>(sql, book).Single();
+                book.Id = id;
 
-            if (book.Cover != null)
-            {
-                string insertCover = @"INSERT INTO Cover (BookId, Cover) Values (@Id, @Cover);";
-                this.db.Execute(insertCover, new {Id = book.Id, Cover = book.CoverAsBytes()});
-            }
+                if (book.Cover != null)
+                {
+                    string insertCover = @"INSERT INTO Cover (BookId, Cover) Values (@Id, @Cover);";
+                    this.db.Execute(insertCover, new {Id = book.Id, Cover = book.CoverAsBytes()});
+                }
 
-            if (book.Authors.Count > 0)
-            {
-                string insertBookAuthor = @"INSERT INTO [dbo].[BookAuthor] ([BookId],[AuthorId])
+                if (book.Authors.Count > 0)
+                {
+                    string insertBookAuthor = @"INSERT INTO2 [dbo].[BookAuthor] ([BookId],[AuthorId])
                                              VALUES (@BookId, @AuthorId);";
 
-                foreach (var author in book.Authors)
-                {
-                    this.db.Execute(insertBookAuthor, new { BookId = book.Id, AuthorId = author.Id });
+                    foreach (var author in book.Authors)
+                    {
+                        this.db.Execute(insertBookAuthor, new {BookId = book.Id, AuthorId = author.Id});
+                    }
                 }
+                transaction.Complete();
             }
-            
             return book;
         }
 
