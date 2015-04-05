@@ -19,18 +19,20 @@ namespace MicroORM_Dapper.Data
 
         public Book FindBook(int id)
         {
-            var book = this.db.Query<Book>("SELECT * FROM Book WHERE Id = @Id;", new {Id = id}).SingleOrDefault();
+            var sql = "SELECT * FROM Book WHERE Id = @Id;" +
+                "SELECT Cover FROM Cover WHERE BookId = @Id;";
 
-            if (book != null)
+            using (var multipleResults = this.db.QueryMultiple(sql, new {Id = id}))
             {
-                var cover = this.db.Query<byte[]>("SELECT Cover FROM Cover WHERE BookId = @Id;", new {Id = id}).SingleOrDefault();
-                if (cover != null)
+                var book = multipleResults.Read<Book>().SingleOrDefault();
+                var cover = multipleResults.Read<byte[]>().SingleOrDefault();
+                if (book != null && cover != null)
                 {
                     book.Cover = Image.FromStream(new MemoryStream(cover));
                 }
+
+                return book;
             }
-           
-            return book;
         }
 
         public List<Book> GetAllBooks()
@@ -59,7 +61,7 @@ namespace MicroORM_Dapper.Data
 
                 if (book.Authors.Count > 0)
                 {
-                    string insertBookAuthor = @"INSERT INTO2 [dbo].[BookAuthor] ([BookId],[AuthorId])
+                    string insertBookAuthor = @"INSERT INTO [dbo].[BookAuthor] ([BookId],[AuthorId])
                                              VALUES (@BookId, @AuthorId);";
 
                     foreach (var author in book.Authors)
