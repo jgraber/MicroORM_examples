@@ -15,6 +15,7 @@ namespace MicroORM_PetaPoco
             ReadData();
             WriteData();
             UpdateData();
+            DeleteData();
         }
 
         private static void ReadData()
@@ -54,6 +55,19 @@ namespace MicroORM_PetaPoco
 
             Console.WriteLine("The updated book with PetaPoco:");
             Console.WriteLine(updatedBook);
+        }
+
+        private static void DeleteData()
+        {
+            var database = new Database("OrmConnection");
+
+            var book = database.Query<Book>("SELECT TOP 1 * FROM Book ORDER BY Id desc").Single();
+
+            database.Delete("Book", "Id", book);
+
+            var result = database.Query<Book>("SELECT * FROM Book WHERE Id = @0", book.Id).SingleOrDefault();
+
+            Console.WriteLine("Book with id {0} still exists? {1}", book.Id, result != null);
         }
     }
 }
