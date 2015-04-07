@@ -14,6 +14,7 @@ namespace MicroORM_PetaPoco
         {
             ReadData();
             WriteData();
+            UpdateData();
         }
 
         private static void ReadData()
@@ -38,6 +39,21 @@ namespace MicroORM_PetaPoco
 
             Console.WriteLine("Inserted book with PetaPoco:");
             Console.WriteLine(book);
+        }
+
+        private static void UpdateData()
+        {
+            var database = new Database("OrmConnection");
+            var book = database.Query<Book>("SELECT TOP 1 * FROM Book ORDER BY Id desc").Single();
+
+            book.Title = "An Updated Title for PetaPoco";
+
+            database.Update("Book", "Id", book);
+
+            var updatedBook = database.Query<Book>("SELECT * FROM Book WHERE Id = @0", book.Id).Single();
+
+            Console.WriteLine("The updated book with PetaPoco:");
+            Console.WriteLine(updatedBook);
         }
     }
 }
