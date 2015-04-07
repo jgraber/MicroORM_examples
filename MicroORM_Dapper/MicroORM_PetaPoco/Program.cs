@@ -12,6 +12,11 @@ namespace MicroORM_PetaPoco
     {
         static void Main(string[] args)
         {
+            ReadData();
+        }
+
+        private static void ReadData()
+        {
             Console.WriteLine("Get all books");
             var database = new Database("OrmConnection");
 
@@ -21,7 +26,6 @@ namespace MicroORM_PetaPoco
             {
                 Console.WriteLine(book);
             }
-
         }
     }
 }
