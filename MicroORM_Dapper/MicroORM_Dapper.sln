@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroORM_Dapper", "MicroORM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroORM_Massive", "MicroORM_Massive\MicroORM_Massive.csproj", "{B3B0FA2E-458D-417D-9811-0EDEEB92852E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroORM_PetaPoco", "MicroORM_PetaPoco\MicroORM_PetaPoco.csproj", "{5CAC24C8-FC9A-4043-9496-6FEBFA3CDA3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B3B0FA2E-458D-417D-9811-0EDEEB92852E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3B0FA2E-458D-417D-9811-0EDEEB92852E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3B0FA2E-458D-417D-9811-0EDEEB92852E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CAC24C8-FC9A-4043-9496-6FEBFA3CDA3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CAC24C8-FC9A-4043-9496-6FEBFA3CDA3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CAC24C8-FC9A-4043-9496-6FEBFA3CDA3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CAC24C8-FC9A-4043-9496-6FEBFA3CDA3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
