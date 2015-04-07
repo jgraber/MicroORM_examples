@@ -13,6 +13,7 @@ namespace MicroORM_PetaPoco
         static void Main(string[] args)
         {
             ReadData();
+            WriteData();
         }
 
         private static void ReadData()
@@ -26,6 +27,17 @@ namespace MicroORM_PetaPoco
             {
                 Console.WriteLine(book);
             }
+        }
+
+        private static void WriteData()
+        {
+            Book book = new Book() { Title = "PetaPoco - The Book", Summary = "Another Micro ORM", Pages = 200, Rating = 5 };
+
+            var database = new Database("OrmConnection");
+            database.Insert("Book", "Id", book);
+
+            Console.WriteLine("Inserted book with PetaPoco:");
+            Console.WriteLine(book);
         }
     }
 }
