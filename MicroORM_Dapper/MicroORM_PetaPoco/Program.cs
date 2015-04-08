@@ -16,6 +16,8 @@ namespace MicroORM_PetaPoco
             WriteData();
             UpdateData();
             DeleteData();
+
+            ReadFromView();
         }
 
         private static void ReadData()
@@ -68,6 +70,14 @@ namespace MicroORM_PetaPoco
             var result = database.Query<Book>("SELECT * FROM Book WHERE Id = @0", book.Id).SingleOrDefault();
 
             Console.WriteLine("Book with id {0} still exists? {1}", book.Id, result != null);
+        }
+
+        private static void ReadFromView()
+        {
+            var database = new Database("OrmConnection");
+
+            var bookstats = database.Query<BookStats>("SELECT * FROM BookStats").SingleOrDefault();
+            Console.WriteLine(bookstats);
         }
     }
 }
