@@ -18,12 +18,12 @@ Links
 ===
 Micro ORM
 * [Dapper](https://github.com/StackExchange/dapper-dot-net) :heavy_check_mark:
-* [Massive](https://github.com/robconery/massive) :o:
-* [FluentData](http://fluentdata.codeplex.com/) :o:
-* [PetaPoco](http://www.toptensoftware.com/petapoco/) :question:
+* [Massive](https://github.com/robconery/massive) :heavy_check_mark:
+* [FluentData](http://fluentdata.codeplex.com/) :x:
+* [PetaPoco](http://www.toptensoftware.com/petapoco/) :o:
 * [Insight.Database](https://github.com/jonwagner/Insight.Database) :question:
-* [MicroLite ORM](http://microliteorm.wordpress.com/) :question:
-* [Symbiotic](http://www.nuget.org/packages/Symbiotic_x64/) :question:
+* [MicroLite ORM](http://microliteorm.wordpress.com/) :x:
+* [Symbiotic](http://www.nuget.org/packages/Symbiotic_x64/) :x:
 * [Top 20 NuGet packages for micro-orm](http://nugetmusthaves.com/Tag/micro-orm)
 
 Theory
@@ -34,7 +34,7 @@ Theory
 * [5 reasons not to use a micro ORM](http://www.mindscapehq.com/blog/index.php/2011/12/05/5-reasons-not-to-use-a-micro-orm/) :o:
 
 Courses / Examples
-* [.NET Micro ORMs](http://www.pluralsight.com/courses/dotnet-micro-orms-introduction) :o:
+* [.NET Micro ORMs](http://www.pluralsight.com/courses/dotnet-micro-orms-introduction) :heavy_check_mark:
 
 Problems / Attention
 * [You may receive incorrect values when using SCOPE_IDENTITY() and @@IDENTITY](http://support.microsoft.com/kb/2019779) :bangbang:
