@@ -109,7 +109,11 @@ CREATE TABLE BookAuthor
 Go
 
 
-// Full Text
+-- Full Text
 CREATE FULLTEXT CATALOG [Fulltext_Book]WITH ACCENT_SENSITIVITY = OFF
 
 GO
+
+
+ALTER TABLE Book
+ADD ReadingStatus TINYINT null;

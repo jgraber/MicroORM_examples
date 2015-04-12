@@ -46,8 +46,8 @@ namespace MicroORM_Dapper.Data
             {
 
 
-                string sql = @"INSERT INTO Book (Title, Pages, ISBN, Summary, Rating, PublisherId) 
-                                VALUES (@Title, @Pages, @ISBN, @Summary, @Rating, @PublisherId);
+                string sql = @"INSERT INTO Book (Title, Pages, ISBN, Summary, Rating, PublisherId, ReadingStatus) 
+                                VALUES (@Title, @Pages, @ISBN, @Summary, @Rating, @PublisherId, @ReadingStatus);
                                 SELECT CAST(SCOPE_IDENTITY() AS INT)";
 
                 int id = this.db.Query<int>(sql, book).Single();

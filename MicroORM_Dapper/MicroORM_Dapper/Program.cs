@@ -32,6 +32,8 @@ namespace MicroORM_Dapper
             FullTextSearch();
 
             SemanticSearch();
+
+            WorkingWithEnums();
         }
 
         private static void ReadData()
@@ -175,6 +177,15 @@ namespace MicroORM_Dapper
             {
                 Console.WriteLine(book);
             }
+        }
+
+        private static void WorkingWithEnums()
+        {
+            var book = new Book() {Title = "Enums are fun", ReadingStatus = ReadingStatus.WantToRead};
+            var saved = _repository.Add(book);
+
+            var fromDb = _repository.FindBook(saved.Id);
+            Console.WriteLine("Enum of saved book is: {0}", fromDb.ReadingStatus);
         }
 
 

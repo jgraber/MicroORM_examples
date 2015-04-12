@@ -17,6 +17,7 @@ namespace MicroORM_Dapper
         public Publisher Publisher { get; set; }
         public Image Cover { get; set; }
         public List<Author> Authors { get; set; }
+        public ReadingStatus ReadingStatus { get; set; }
 
         public Book()
         {
