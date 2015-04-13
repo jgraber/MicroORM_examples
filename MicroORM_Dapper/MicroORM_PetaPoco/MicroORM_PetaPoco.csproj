@@ -43,11 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Author.cs" />
     <Compile Include="Book.cs" />
     <Compile Include="BookStats.cs" />
+    <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Data\PetaPocoRepository.cs" />
     <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Publisher.cs" />
+    <Compile Include="SemanticBook.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

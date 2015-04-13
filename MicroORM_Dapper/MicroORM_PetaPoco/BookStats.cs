@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MicroORM_Dapper
+namespace MicroORM_PetaPoco
 {
     public class BookStats
     {

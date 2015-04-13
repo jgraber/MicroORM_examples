@@ -4,7 +4,7 @@ using System.Linq;
 using System.Drawing;
 using System.IO;
 
-namespace MicroORM_Dapper
+namespace MicroORM_PetaPoco
 {
     public class Book
     {
