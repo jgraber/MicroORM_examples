@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MicroORM_PetaPoco.Data;
 using PetaPoco;
 
 namespace MicroORM_PetaPoco
 {
     class Program
     {
+        private static IRepository _repository;
+
         static void Main(string[] args)
         {
+            _repository = new PetaPocoRepository();
+
             ReadData();
             WriteData();
             UpdateData();
@@ -22,9 +27,7 @@ namespace MicroORM_PetaPoco
         private static void ReadData()
         {
             Console.WriteLine("Get all books");
-            var database = new Database("OrmConnection");
-
-            var books = database.Query<Book>("SELECT * FROM BOOK;");
+            var books = _repository.GetAllBooks();
 
             foreach (var book in books)
             {
@@ -36,8 +39,7 @@ namespace MicroORM_PetaPoco
         {
             Book book = new Book() { Title = "PetaPoco - The Book", Summary = "Another Micro ORM", Pages = 200, Rating = 5 };
 
-            var database = new Database("OrmConnection");
-            database.Insert("Book", "Id", book);
+            _repository.Add(book);
 
             Console.WriteLine("Inserted book with PetaPoco:");
             Console.WriteLine(book);
@@ -45,14 +47,11 @@ namespace MicroORM_PetaPoco
 
         private static void UpdateData()
         {
-            var database = new Database("OrmConnection");
-            var book = database.Query<Book>("SELECT TOP 1 * FROM Book ORDER BY Id desc").Single();
-
+            var book = _repository.GetLatestBook();
             book.Title = "An Updated Title for PetaPoco";
 
-            database.Update("Book", "Id", book);
-
-            var updatedBook = database.Query<Book>("SELECT * FROM Book WHERE Id = @0", book.Id).Single();
+            _repository.Update(book);
+            var updatedBook = _repository.FindBook(book.Id);
 
             Console.WriteLine("The updated book with PetaPoco:");
             Console.WriteLine(updatedBook);
@@ -60,22 +59,18 @@ namespace MicroORM_PetaPoco
 
         private static void DeleteData()
         {
-            var database = new Database("OrmConnection");
+            var book = _repository.GetLatestBook();
 
-            var book = database.Query<Book>("SELECT TOP 1 * FROM Book ORDER BY Id desc").Single();
+            _repository.RemoveBook(book.Id);
 
-            database.Delete("Book", "Id", book);
-
-            var result = database.Query<Book>("SELECT * FROM Book WHERE Id = @0", book.Id).SingleOrDefault();
+            var result = _repository.FindBook(book.Id);
 
             Console.WriteLine("Book with id {0} still exists? {1}", book.Id, result != null);
         }
 
         private static void ReadFromView()
         {
-            var database = new Database("OrmConnection");
-
-            var bookstats = database.Query<BookStats>("SELECT * FROM BookStats").SingleOrDefault();
+            var bookstats = _repository.GetStatistics();
             Console.WriteLine(bookstats);
         }
     }
