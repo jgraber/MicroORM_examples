@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using PetaPoco;
 
@@ -19,7 +20,15 @@ namespace MicroORM_PetaPoco
             get { return Publisher != null ? (int?) Publisher.Id : null; }
             private set {}
         }
-        
+
+        [ResultColumn]
+        public List<Author> Authors { get; set; }
+
+        public Book()
+        {
+            Authors = new List<Author>();
+        }
+
         public override string ToString()
         {
             return String.Format("[{0}] {1} - {2}, {3}",

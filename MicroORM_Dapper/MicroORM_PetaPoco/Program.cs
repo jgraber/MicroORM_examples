@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using MicroORM_PetaPoco.Data;
+using PetaPoco;
 
 namespace MicroORM_PetaPoco
 {
@@ -19,6 +21,10 @@ namespace MicroORM_PetaPoco
             ReadFromView();
 
             OneToNRelation();
+
+            NToMRelation();
+
+            CompleteBook();
         }
 
         private static void ReadData()
@@ -99,7 +105,51 @@ namespace MicroORM_PetaPoco
             {
                 Console.WriteLine("{0} is published by {1}", currentBook, currentBook.Publisher);
             }
+        }
 
+        private static void NToMRelation()
+        {
+            using (var database = new Database("OrmConnection"))
+            {
+                var author = new Author() {LastName = "Peta", FirstName = "Poco"};
+                _repository.Add(author);
+
+                var book = new Book() {Title = "One with an Author in PetaPoco"};
+
+                book.Authors.Add(author);
+
+                Console.WriteLine("New Author Id: {0}", author.Id);
+                _repository.Add(book);
+
+
+                var authorId =
+                    database.Query<int>("SELECT authorId FROM BookAuthor WHERE BookId = @Id", book).SingleOrDefault();
+                var bookAuthor = _repository.FindAuthor(authorId);
+                Console.WriteLine("Author of the book 'One with an Author': {0}", bookAuthor);
+
+                
+            }
+        }
+
+        private static void CompleteBook()
+        {
+            var author = new Author() { LastName = "Author", FirstName = "The" };
+            _repository.Add(author);
+
+            var publisher = new Publisher() {Name = "Publisher", EMail = "ThePublisher@a.com", Url = "http//www.a.com"};
+            _repository.Add(publisher);
+
+            var book = new Book() { Title = "One with an Author in PetaPoco" };
+            book.Authors.Add(author);
+            book.Publisher = publisher;
+
+            Console.WriteLine("New Author Id: {0}", author.Id);
+            _repository.Add(book);
+
+            var completeBook = _repository.FindBook(book.Id);
+            Console.WriteLine("All together in {0}", completeBook);
+            Console.WriteLine("Book was written by {0}", completeBook.Authors.First());
+            Console.WriteLine("Book was published by {0}", completeBook.Publisher);
         }
     }
 }
