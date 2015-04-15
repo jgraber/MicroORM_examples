@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Drawing;
-using System.IO;
+using PetaPoco;
 
 namespace MicroORM_PetaPoco
 {
@@ -14,6 +12,13 @@ namespace MicroORM_PetaPoco
         public int Pages { get; set; }
         public string Summary { get; set; }
         public decimal Rating { get; set; }
+
+        [ResultColumn]
+        public Publisher Publisher { get; set; }
+        public int? PublisherId { //get;
+            get { return Publisher != null ? (int?) Publisher.Id : null; }
+            private set {}
+        }
         
         public override string ToString()
         {

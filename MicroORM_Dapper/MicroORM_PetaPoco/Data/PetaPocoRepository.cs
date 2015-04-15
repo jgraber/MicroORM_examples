@@ -13,7 +13,7 @@ namespace MicroORM_PetaPoco.Data
 
         public Book FindBook(int id)
         {
-            return database.Query<Book>("SELECT * FROM Book WHERE Id = @0", id).SingleOrDefault();
+            return database.Query<Book, Publisher>("SELECT * FROM Book b LEFT JOIN Publisher p ON p.Id = b.PublisherId WHERE b.Id = @0", id).SingleOrDefault();
         }
 
         public List<Book> GetAllBooks()
@@ -45,7 +45,7 @@ namespace MicroORM_PetaPoco.Data
 
         public List<Book> GetBooksByPublisher(Publisher publisher)
         {
-            throw new NotImplementedException();
+            return database.Query<Book, Publisher>("SELECT * FROM Book b LEFT JOIN Publisher p ON p.Id = b.PublisherId WHERE p.Id = @0", publisher.Id).ToList(); 
         }
 
         public Author Add(Author author)
@@ -60,7 +60,8 @@ namespace MicroORM_PetaPoco.Data
 
         public Publisher Add(Publisher publisher)
         {
-            throw new NotImplementedException();
+            database.Insert("Publisher", "Id", publisher);
+            return publisher;
         }
 
         public Publisher FindPublisher(int id)

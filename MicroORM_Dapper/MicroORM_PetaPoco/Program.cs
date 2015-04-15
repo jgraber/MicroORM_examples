@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MicroORM_PetaPoco.Data;
-using PetaPoco;
 
 namespace MicroORM_PetaPoco
 {
@@ -22,6 +17,8 @@ namespace MicroORM_PetaPoco
             DeleteData();
 
             ReadFromView();
+
+            OneToNRelation();
         }
 
         private static void ReadData()
@@ -72,6 +69,37 @@ namespace MicroORM_PetaPoco
         {
             var bookstats = _repository.GetStatistics();
             Console.WriteLine(bookstats);
+        }
+
+        private static void OneToNRelation()
+        {
+
+            // Create and save a publisher
+            var publisher = new Publisher()
+            {
+                Name = "The Pragmatic Programmers, LLC PetaPoco edition",
+                EMail = "support@pragmaticprogrammer.com",
+                Url = "https://pragprog.com/"
+            };
+            _repository.Add(publisher);
+            Console.WriteLine(publisher);
+
+            // Create and save a book with a publisher
+            var book = new Book()
+            {
+                Title = "Pragmatic Thinking & Learning in PetaPoco",
+                Publisher = publisher
+            };
+
+            _repository.Add(book);
+
+            // List all books of the publisher
+            var books = _repository.GetBooksByPublisher(publisher);
+            foreach (var currentBook in books)
+            {
+                Console.WriteLine("{0} is published by {1}", currentBook, currentBook.Publisher);
+            }
+
         }
     }
 }
