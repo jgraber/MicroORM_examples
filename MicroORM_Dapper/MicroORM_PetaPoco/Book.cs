@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
+using System.IO;
 using PetaPoco;
 
 namespace MicroORM_PetaPoco
@@ -15,6 +17,9 @@ namespace MicroORM_PetaPoco
         public decimal Rating { get; set; }
 
         [ResultColumn]
+        public Image Cover { get; set; }
+
+        [ResultColumn]
         public Publisher Publisher { get; set; }
         public int? PublisherId { //get;
             get { return Publisher != null ? (int?) Publisher.Id : null; }
@@ -27,6 +32,17 @@ namespace MicroORM_PetaPoco
         public Book()
         {
             Authors = new List<Author>();
+        }
+
+        public byte[] CoverAsBytes()
+        {
+            MemoryStream ms = new MemoryStream();
+            if (Cover != null)
+            {
+                Cover.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            }
+
+            return ms.ToArray();
         }
 
         public override string ToString()

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using MicroORM_PetaPoco.Data;
 using PetaPoco;
 
@@ -21,6 +24,8 @@ namespace MicroORM_PetaPoco
             ReadFromView();
 
             OneToNRelation();
+
+            OneToOneRelation();
 
             NToMRelation();
 
@@ -105,6 +110,28 @@ namespace MicroORM_PetaPoco
             {
                 Console.WriteLine("{0} is published by {1}", currentBook, currentBook.Publisher);
             }
+        }
+
+        private static void OneToOneRelation()
+        {
+            var cover = Image.FromFile(".\\Images\\cover_prag_think_learn.jpg");
+            var book = new Book() { Title = "One with a BookCover in PetaPoco" };
+            book.Cover = cover;
+            _repository.Add(book);
+
+            using (var database = new Database("OrmConnection"))
+            {
+                var result = database.Query<int>("SELECT 1 FROM Cover WHERE BookId = @0", book.Id).SingleOrDefault();
+
+                Console.WriteLine("Was the cover found? {0}", result);
+
+                var bookWithCover = _repository.FindBook(book.Id);
+                FileStream fs = new FileStream(bookWithCover.Id + ".png", FileMode.Create);
+                bookWithCover.Cover.Save(fs, System.Drawing.Imaging.ImageFormat.Png);
+                fs.Close();
+            }
+
+
         }
 
         private static void NToMRelation()

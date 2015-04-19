@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PetaPoco;
+using System.Drawing;
 
 namespace MicroORM_PetaPoco.Data
 {
@@ -27,6 +29,15 @@ namespace MicroORM_PetaPoco.Data
                 {
                     book.Authors.AddRange(authors);
                 }
+
+                var cover = database.Query<byte[]>(
+                    @"SELECT Cover FROM COVER WHERE BookId = @0", book.Id).SingleOrDefault();
+
+                if (cover != null)
+                {
+                    book.Cover = Image.FromStream(new MemoryStream(cover));
+                }
+
             }
 
             return book;
@@ -47,6 +58,12 @@ namespace MicroORM_PetaPoco.Data
             foreach (var author in book.Authors)
             {
                 database.Execute(insertBookAuthor, new {BookId = book.Id, AuthorId = author.Id});
+            }
+
+            if (book.Cover != null)
+            {
+                string insertCover = @"INSERT INTO Cover (BookId, Cover) Values (@Id, @Cover);";
+                database.Execute(insertCover, new { book.Id, Cover = book.CoverAsBytes() });
             }
 
             return book;
