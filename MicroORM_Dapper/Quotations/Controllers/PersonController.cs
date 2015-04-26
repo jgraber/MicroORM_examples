@@ -21,12 +21,14 @@ namespace Quotations.Controllers
         // GET: Person/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var person = _repository.FindPerson(id);
+            return View(person);
         }
 
         // GET: Person/Create
         public ActionResult Create()
         {
+            
             return View();
         }
 

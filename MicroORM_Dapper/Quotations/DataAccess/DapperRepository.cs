@@ -61,5 +61,11 @@ namespace Quotations.DataAccess
             return quote;
         }
 
+        public Person FindPerson(int id)
+        {
+            var person = _db.Query<Person>("SELECT * FROM Person WHERE Id = @Id;", new { Id = id }).SingleOrDefault();
+            return person;
+        }
+
     }
 }
