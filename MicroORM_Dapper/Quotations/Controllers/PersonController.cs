@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Quotations.DataAccess;
+using Quotations.Models;
 
 namespace Quotations.Controllers
 {
@@ -28,23 +29,21 @@ namespace Quotations.Controllers
         // GET: Person/Create
         public ActionResult Create()
         {
-            
             return View();
         }
 
         // POST: Person/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Person person)
         {
             try
             {
-                // TODO: Add insert logic here
-
+                _repository.Add(person);
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(person);
             }
         }
 
