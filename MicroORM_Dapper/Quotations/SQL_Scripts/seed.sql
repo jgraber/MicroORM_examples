@@ -1,5 +1,5 @@
 ﻿INSERT INTO [Person] ([LastName], [FirstName], [Born], [Died])
-VALUES ('Einsten', 'Albert', '18790314', '19550418');
+VALUES ('Einstein', 'Albert', '18790314', '19550418');
 
 INSERT INTO [dbo].[Quote] ([Text], [Year], [Context], [PersonId])
 VALUES ('Unthinking respect for authority is the greatest enemy of truth', '1900', NULL, (SELECT TOP 1 Id FROM Person WHERE LastName = 'Einstein'));
