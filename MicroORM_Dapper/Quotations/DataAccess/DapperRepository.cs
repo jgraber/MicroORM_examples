@@ -77,5 +77,11 @@ namespace Quotations.DataAccess
          
             return person;
         }
+
+        public void DeletePerson(int id)
+        {
+            string sql = @"DELETE FROM Person WHERE Id = @Id;";
+            _db.Execute(sql, new { Id = id });
+        }
     }
 }

@@ -73,7 +73,8 @@ namespace Quotations.Controllers
         // GET: Person/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var person = _repository.FindPerson(id);
+            return View(person);
         }
 
         // POST: Person/Delete/5
@@ -82,7 +83,7 @@ namespace Quotations.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                _repository.DeletePerson(id);
 
                 return RedirectToAction("Index");
             }
