@@ -8,8 +8,8 @@ namespace Quotations.Models
         public int Id { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
-        public DateTime Born { get; set; }
-        public DateTime Died { get; set; }
+        public DateTime? Born { get; set; }
+        public DateTime? Died { get; set; }
         public List<Quote> Quotes { get; set; }
 
         public Person()

@@ -67,5 +67,15 @@ namespace Quotations.DataAccess
             return person;
         }
 
+        public Person Update(Person person)
+        {
+            string sql = @"UPDATE [dbo].[Person]
+                        SET [LastName] = @LastName, [FirstName] = @FirstName, 
+                            [Born] = @Born, [Died] = @Died
+                        WHERE Id = @Id;";
+            _db.Execute(sql, person);
+         
+            return person;
+        }
     }
 }

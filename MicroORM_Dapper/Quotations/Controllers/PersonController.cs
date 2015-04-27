@@ -50,22 +50,23 @@ namespace Quotations.Controllers
         // GET: Person/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var person = _repository.FindPerson(id);
+            return View(person);
         }
 
         // POST: Person/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Person person)
         {
             try
             {
-                // TODO: Add update logic here
+                _repository.Update(person);
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return View(person);
             }
         }
 
