@@ -172,6 +172,7 @@
     <Content Include="Views\Person\Edit.cshtml" />
     <Content Include="Views\Person\Delete.cshtml" />
     <Content Include="Views\Quote\Index.cshtml" />
+    <Content Include="Views\Quote\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

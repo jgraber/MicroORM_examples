@@ -21,7 +21,8 @@ namespace Quotations.Controllers
         // GET: Quote/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var quote = _repository.FindQuote(id);
+            return View(quote);
         }
 
         // GET: Quote/Create

@@ -88,5 +88,10 @@ namespace Quotations.DataAccess
         {
             return _db.Query<Quote>("SELECT * FROM Quote;").ToList();
         }
+
+        internal Quote FindQuote(int id)
+        {
+            return _db.Query<Quote>("SELECT * FROM Quote WHERE Id = @Id;", new { Id = id }).SingleOrDefault();
+        }
     }
 }
