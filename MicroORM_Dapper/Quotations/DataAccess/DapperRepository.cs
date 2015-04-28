@@ -83,5 +83,10 @@ namespace Quotations.DataAccess
             string sql = @"DELETE FROM Person WHERE Id = @Id;";
             _db.Execute(sql, new { Id = id });
         }
+
+        internal List<Quote> GetAllQuotes()
+        {
+            return _db.Query<Quote>("SELECT * FROM Quote;").ToList();
+        }
     }
 }
