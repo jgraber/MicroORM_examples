@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Quotations.DataAccess;
+using Quotations.Models;
 
 namespace Quotations.Controllers
 {
@@ -28,17 +29,21 @@ namespace Quotations.Controllers
         // GET: Quote/Create
         public ActionResult Create()
         {
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            _repository.GetAllPersons().ForEach(p => items.Add(new SelectListItem(){Text = p.LastName + " " + p.FirstName, Value = p.Id.ToString()}));
+            ViewBag.AuthorId = items;
+
             return View();
         }
 
         // POST: Quote/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Quote quote)
         {
             try
             {
-                // TODO: Add insert logic here
-
+                _repository.Add(quote);
                 return RedirectToAction("Index");
             }
             catch

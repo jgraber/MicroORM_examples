@@ -173,6 +173,7 @@
     <Content Include="Views\Person\Delete.cshtml" />
     <Content Include="Views\Quote\Index.cshtml" />
     <Content Include="Views\Quote\Details.cshtml" />
+    <Content Include="Views\Quote\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -53,9 +53,10 @@ namespace Quotations.DataAccess
             var insertQuote = @"INSERT INTO [dbo].[Quote]
                                     ([Text], [Year], [Context], [PersonId])
                                 VALUES
-                                    (@Text, @Year, @Context, @PersonId)";
+                                    (@Text, @Year, @Context, @PersonId);
+                                SELECT CAST(SCOPE_IDENTITY() AS INT);";
             int id = _db.Query<int>(insertQuote, 
-                new {quote.Text, quote.Year, quote.Context, PersonId = quote.Author.Id}).Single();
+                new {quote.Text, quote.Year, quote.Context, PersonId = quote.AuthorId}).Single();
             quote.Id = id;
 
             return quote;
