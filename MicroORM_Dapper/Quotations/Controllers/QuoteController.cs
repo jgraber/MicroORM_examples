@@ -77,7 +77,8 @@ namespace Quotations.Controllers
         // GET: Quote/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var quote = _repository.FindQuote(id);
+            return View(quote);
         }
 
         // POST: Quote/Delete/5
@@ -86,7 +87,7 @@ namespace Quotations.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                _repository.DeleteQuote(id);
 
                 return RedirectToAction("Index");
             }

@@ -85,14 +85,20 @@ namespace Quotations.DataAccess
             _db.Execute(sql, new { Id = id });
         }
 
-        internal List<Quote> GetAllQuotes()
+        public List<Quote> GetAllQuotes()
         {
             return _db.Query<Quote>("SELECT * FROM Quote;").ToList();
         }
 
-        internal Quote FindQuote(int id)
+        public Quote FindQuote(int id)
         {
             return _db.Query<Quote>("SELECT * FROM Quote WHERE Id = @Id;", new { Id = id }).SingleOrDefault();
+        }
+
+        public void DeleteQuote(int id)
+        {
+            string sql = @"DELETE FROM Quote WHERE Id = @Id;";
+            _db.Execute(sql, new { Id = id });
         }
     }
 }
