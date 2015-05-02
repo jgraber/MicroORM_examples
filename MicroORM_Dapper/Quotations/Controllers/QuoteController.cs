@@ -55,17 +55,22 @@ namespace Quotations.Controllers
         // GET: Quote/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            List<SelectListItem> items = new List<SelectListItem>();
+            _repository.GetAllPersons().ForEach(p => items.Add(new SelectListItem() { Text = p.LastName + " " + p.FirstName, Value = p.Id.ToString() }));
+            ViewBag.AuthorId = items;
+
+            var quote = _repository.FindQuote(id);
+            return View(quote);
         }
 
         // POST: Quote/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Quote quote)
         {
             try
             {
                 // TODO: Add update logic here
-
+                _repository.Update(quote);
                 return RedirectToAction("Index");
             }
             catch

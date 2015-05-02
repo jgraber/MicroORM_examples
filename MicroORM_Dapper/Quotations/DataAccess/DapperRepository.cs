@@ -100,5 +100,16 @@ namespace Quotations.DataAccess
             string sql = @"DELETE FROM Quote WHERE Id = @Id;";
             _db.Execute(sql, new { Id = id });
         }
+
+        public Quote Update(Quote quote)
+        {
+            string sql = @"UPDATE [dbo].[Quote]
+                           SET [Text] = @Text, [Year] = @Year, [Context] = @Context, 
+                               [PersonId] = @PersonId
+                           WHERE Id = @Id;";
+            _db.Execute(sql, new {quote.Id, quote.Text, quote.Year, quote.Context, PersonId = quote.AuthorId });
+
+            return quote;
+        }
     }
 }
