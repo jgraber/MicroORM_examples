@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Quotations.DataAccess;
 using Quotations.Models;
@@ -69,7 +66,6 @@ namespace Quotations.Controllers
         {
             try
             {
-                // TODO: Add update logic here
                 _repository.Update(quote);
                 return RedirectToAction("Index");
             }
@@ -93,7 +89,6 @@ namespace Quotations.Controllers
             try
             {
                 _repository.DeleteQuote(id);
-
                 return RedirectToAction("Index");
             }
             catch
