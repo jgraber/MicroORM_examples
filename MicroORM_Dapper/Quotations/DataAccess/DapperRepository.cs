@@ -6,6 +6,7 @@ using System.Linq;
 using Quotations.Models;
 using System.Transactions;
 using Dapper;
+using Quotations.ViewModel;
 
 namespace Quotations.DataAccess
 {
@@ -108,6 +109,15 @@ namespace Quotations.DataAccess
             _db.Execute(sql, new {quote.Id, quote.Text, quote.Year, quote.Context, PersonId = quote.AuthorId });
 
             return quote;
+        }
+
+        public QuoteVM GetRandomQuote()
+        {
+            string sql = @"SELECT TOP 1 q.*, p.LastName, p.FirstName
+                          FROM [Quote] q
+                          INNER JOIN Person p ON q.PersonId = p.Id
+                          ORDER BY NEWID();";
+            return _db.Query<QuoteVM>(sql).FirstOrDefault();
         }
     }
 }

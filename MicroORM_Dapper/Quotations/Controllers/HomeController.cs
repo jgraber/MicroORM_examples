@@ -1,12 +1,16 @@
 ﻿using System.Web.Mvc;
+using Quotations.DataAccess;
 
 namespace Quotations.Controllers
 {
     public class HomeController : Controller
     {
+        private DapperRepository _repository = new DapperRepository();
+
         public ActionResult Index()
         {
-            return View();
+            var quote = _repository.GetRandomQuote();
+            return View(quote);
         }
 
         public ActionResult About()

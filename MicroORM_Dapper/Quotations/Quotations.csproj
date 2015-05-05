@@ -124,6 +124,7 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Quote.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\QuoteVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -187,6 +188,7 @@
     <Content Include="Views\Quote\Create.cshtml" />
     <Content Include="Views\Quote\Delete.cshtml" />
     <Content Include="Views\Quote\Edit.cshtml" />
+    <Content Include="Views\Home\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
