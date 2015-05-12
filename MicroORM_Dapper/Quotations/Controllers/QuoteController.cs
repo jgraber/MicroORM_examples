@@ -7,7 +7,7 @@ namespace Quotations.Controllers
 {
     public class QuoteController : Controller
     {
-        private DapperRepository _repository = new DapperRepository();
+        private IRepository _repository = new DapperRepository();
 
         // GET: Quote
         public ActionResult Index()

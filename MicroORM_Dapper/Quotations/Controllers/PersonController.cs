@@ -6,7 +6,7 @@ namespace Quotations.Controllers
 {
     public class PersonController : Controller
     {
-        private DapperRepository _repository = new DapperRepository();
+        private IRepository _repository = new DapperRepository();
 
         // GET: Person
         public ActionResult Index()

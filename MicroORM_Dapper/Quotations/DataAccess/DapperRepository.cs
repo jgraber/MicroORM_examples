@@ -10,7 +10,7 @@ using Quotations.ViewModel;
 
 namespace Quotations.DataAccess
 {
-    public class DapperRepository
+    public class DapperRepository : IRepository
     {
         private readonly IDbConnection _db = new SqlConnection(
                  ConfigurationManager.ConnectionStrings["QuoteDB"].ConnectionString);

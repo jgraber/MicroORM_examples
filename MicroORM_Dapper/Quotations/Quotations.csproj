@@ -118,6 +118,7 @@
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
     <Compile Include="DataAccess\DapperRepository.cs" />
+    <Compile Include="DataAccess\IRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
