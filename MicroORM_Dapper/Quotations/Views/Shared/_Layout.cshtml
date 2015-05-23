@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@using Quotations.Helper
+<!DOCTYPE html>
+<html lang="@System.Globalization.CultureInfo.CurrentUICulture.Name">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,6 +37,8 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    <script src="@Url.Content(GlobalizeUrls.Globalize)" type="text/javascript"></script>
+    <script src="@Url.Content(GlobalizeUrls.GlobalizeCulture)" type="text/javascript"></script>
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
