@@ -3,18 +3,25 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var BornDay = ViewBag.BornDay;
+    var BornMonth = ViewBag.BornMonth;
+    var BornYear = ViewBag.BornYear;
+    var ExceptionMessage = ViewBag.Exception;
 }
 
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Person</h4>
-        <hr />
+        <hr/>
+        @if (ExceptionMessage != null)
+        {
+            <div class="text-danger">@ExceptionMessage</div> }
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -35,7 +42,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Born, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Born, new { htmlAttributes = new { @class = "form-control" } })
+                Day: <input type="number" min="1" max="31" value="@BornDay" step="1" name="Born.Day" maxlength="2" width="2" class="text-box single-line" />
+                Month: <input type="number" min="1" value="@BornMonth" max="12" step="1" name="Born.Month" maxlength="2" size="1" class="text-box single-line" />
+                Year: <input type="number" min="1" value="@BornYear" max="2100" step="1" name="Born.Year" maxlength="4" size="4" class="text-box single-line" />
                 @Html.ValidationMessageFor(model => model.Born, "", new { @class = "text-danger" })
             </div>
         </div>
