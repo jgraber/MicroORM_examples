@@ -31,24 +31,15 @@ namespace Quotations.Controllers
 
         // POST: Person/Create
         [HttpPost]
-        public ActionResult Create(Person person, FormCollection formCollection)
+        public ActionResult Create(Person person)
         {
             try
             {
-                string born = String.Format("{0}-{1}-{2}", formCollection["Born.Year"], formCollection["Born.Month"],
-                    formCollection["Born.Day"]);
-                person.Born = DateTime.Parse(born);
-
                 _repository.Add(person);
                 return RedirectToAction("Index");
             }
             catch(Exception exception)
             {
-                ViewBag.BornDay = formCollection["Born.Day"];
-                ViewBag.BornMonth = formCollection["Born.Month"];
-                ViewBag.BornYear = formCollection["Born.Year"];
-                ViewBag.Exception = exception.Message;
-
                 return View(person);
             }
         }
