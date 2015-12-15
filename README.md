@@ -28,6 +28,7 @@ Micro ORM
 
 Theory
 * [Small is Beautiful - .NET Micro ORMs](http://www.diplo.co.uk/blog/2011/8/15/small-is-beautiful-net-micro-orms.aspx) :heavy_check_mark:
+* [What ORMs have taught me: just learn SQL](http://wozniak.ca/what-orms-have-taught-me-just-learn-sql)
 * [Micro-ORMs for .NET Compared – Part 1](http://andrewtwest.com/2012/08/19/micro-orms-for-net-compared-part-1/) :heavy_check_mark:
 * [Choosing an ORM strategy](http://lostechies.com/jimmybogard/2012/07/20/choosing-an-orm-strategy/) :heavy_check_mark:
 * [What are some of the benefits of a “Micro-ORM”?](http://programmers.stackexchange.com/questions/120457/what-are-some-of-the-benefits-of-a-micro-orm) :heavy_check_mark:
